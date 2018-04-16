@@ -6,6 +6,7 @@ let waveHeight = 10;
 let waveFreq = 0;
 let wave = 0;
 let period = 1;
+let polygonNum = 30;
 
 function setup() {
   // put setup code here
@@ -21,19 +22,22 @@ function draw() {
   noFill();
   stroke(255);
   strokeWeight(1);
-  for (var i = 0; i < 25; i++) {
-    waveFreq = map(i, 0, 10, 0, TWO_PI * period);
+
+  vertices = document.getElementById('vertices').value;
+  period = document.getElementById('freq').value;
+  waveHeight = document.getElementById('height').value;
+  polygonNum = document.getElementById('number').value;
+
+  for (var i = 0; i < polygonNum; i++) {
+    waveFreq = map(i, 0, polygonNum, 0, TWO_PI * period);
     let y = (height/2) + (sin(wave + waveFreq) * waveHeight);
     Polygon(vertices, radius * i, width/2, y);
   }
   wave += inc;
-
 }
 
 function Polygon(vert, r, posX, posY) {
   beginShape();
-  let value = document.getElementById('vertices').value;
-  vertices = value;
   for (var i = 0; i < vert; i++) {
     let angle = map(i, 0, vert, 0, TWO_PI);
     let x = cos(angle) * r + posX;
@@ -42,7 +46,6 @@ function Polygon(vert, r, posX, posY) {
   }
   endShape(CLOSE);
 }
-
 
 function windowResize() {
   resizeCanvas(innerWidth, innerHeight);
