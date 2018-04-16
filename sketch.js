@@ -21,7 +21,7 @@ function draw() {
   // fill(255, 0, 0);
   noFill();
   stroke(255);
-  strokeWeight(1);
+  strokeWeight(2);
 
   vertices = document.getElementById('vertices').value;
   period = document.getElementById('freq').value;
@@ -31,15 +31,15 @@ function draw() {
   for (var i = 0; i < polygonNum; i++) {
     waveFreq = map(i, 0, polygonNum, 0, TWO_PI * period);
     let y = (height/2) + (sin(wave + waveFreq) * waveHeight);
-    Polygon(vertices, radius * i, width/2, y);
+    Polygon(vertices, radius * i, 5 * i , width/2, y);
   }
   wave += inc;
 }
 
-function Polygon(vert, r, posX, posY) {
-  beginShape();
+function Polygon(vert, r, offset, posX, posY) {
+  beginShape(POINTS);
   for (var i = 0; i < vert; i++) {
-    let angle = map(i, 0, vert, 0, TWO_PI);
+    let angle = map(i, 0, vert, 0 + offset, TWO_PI + offset);
     let x = cos(angle) * r + posX;
     let y = sin(angle) * (r / 2) + posY;
     vertex(x, y);
